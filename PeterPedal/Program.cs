@@ -1,34 +1,61 @@
 using System;
 using System.Collections.Generic;
 
-// Customer contact details for a repair case.
-class RepairCaseData
+/// <summary>
+/// Holds the customer contact details associated with a repair case.
+/// </summary>
+public class RepairCaseData
 {
+    /// <summary>The customer's first name.</summary>
     public string FirstName;
+    /// <summary>The customer's last name.</summary>
     public string LastName;
+    /// <summary>The customer's phone number.</summary>
     public string Phone;
 }
 
-class RepairCase
+/// <summary>
+/// Represents a single bike repair case, including customer info, findings,
+/// required parts, status, and pricing.
+/// </summary>
+public class RepairCase
 {
+    /// <summary>The unique frame number identifying the bike/case.</summary>
     public string FrameNumber;
+    /// <summary>Description of the reported problem.</summary>
     public string Problem;
+    /// <summary>Contact details of the customer who owns the case.</summary>
     public RepairCaseData CustomerInfo;
+    /// <summary>List of findings registered during inspection of the bike.</summary>
     public List<string> Findings = new List<string>();
+    /// <summary>List of spare parts identified as needed for the repair.</summary>
     public List<string> Parts = new List<string>();
     public int Status; // 0 = created, 1 = awaiting approval, 2 = approved, 3 = finished
     public Boolean Approved;
     public decimal TotalPrice;
 }
 
-class SparePartCatalog
+/// <summary>
+/// Represents a single bike repair case, including customer info, findings,
+/// required parts, status, and pricing.
+/// </summary>
+public class SparePartCatalog
+
 {
+
+    /// <summary>Internal mapping of part names to their base prices (in kr).</summary>
     private Dictionary<string, decimal> prices = new Dictionary<string, decimal>
     {
         { "Gear cable", 150m },
         { "Sprocket", 300m },
         { "Brake pads", 120m }
     };
+
+    /// <summary>
+    /// Gets the base price of a spare part.
+    /// </summary>
+    /// <param name="partName">The name of the part to look up.</param>
+    /// <returns>The base price in kr, or 0 if the part is not found in the catalog.</returns>
 
     public decimal GetPrice(string partName)
     {
@@ -40,20 +67,37 @@ class SparePartCatalog
     }
 }
 
-class Notifier
+/// <summary>
+/// Handles sending notifications (SMS and voicemail) to customers.
+/// </summary>
+public class Notifier
 {
+
+     /// <summary>
+    /// Sends an SMS message to the given phone number.
+    /// </summary>
+    /// <param name="phone">The recipient's phone number.</param>
+    /// <param name="message">The message content to send.</param>
     public void SendSms(string phone, String message)
     {
         Console.WriteLine("SMS to " + phone + ": " + message);
     }
 
+    /// <summary>
+    /// Leaves a standard voicemail for the given phone number, asking the customer to call back.
+    /// </summary>
+    /// <param name="phone">The recipient's phone number.</param>
     public void LeaveVoicemail(string phone)
     {
         Console.WriteLine($"Voicemail left for {phone}: please call us back regarding your bike.");
     }
 }
 
-class repairService
+/// <summary>
+/// Coordinates the full lifecycle of a bike repair case: creation, inspection,
+/// parts lookup, pricing, approval, repair, and payment.
+/// </summary>
+public class repairService
 {
     private List<RepairCase> cases = new List<RepairCase>();
     private SparePartCatalog catalog = new SparePartCatalog();
