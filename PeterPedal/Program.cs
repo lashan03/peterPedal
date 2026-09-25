@@ -155,19 +155,12 @@ class repairService
     }
 
     // Calculates a price estimate for the customer's offer.
-    private decimal BeregnPris(RepairCase c)
-    {
-        decimal partsPrice = CalculatePriceForGearCable() + CalculatePriceForSprocket() + CalculatePriceForBrakePad();
-        decimal labor = HOURLY_RATE * 2;
-        decimal subtotal = partsPrice + labor;
-        decimal vat = subtotal * 0.25m;
-        return subtotal + vat;
-    }
+
 
     public void CalculateOffer(string frameNumber)
     {
         RepairCase c = FindCase(frameNumber);
-        decimal Price = BeregnPris(c);
+        decimal Price = CalculateTotal(c);
         c.TotalPrice = Price;
         c.Status = 1;
 
