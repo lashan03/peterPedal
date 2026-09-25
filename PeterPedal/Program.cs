@@ -233,11 +233,6 @@ class repairService
         Console.WriteLine($"{result.CustomerInfo.FirstName} has paid {result.TotalPrice.ToString("F2")} kr. The bike is ready to ride!");
     }
 
-    // Old summary print, replaced by the receipt in finishRepair(). No longer called anywhere.
-    public void PrintCaseSummary(string frameNumber) {
-	RepairCase c = FindCase(frameNumber);
-	Console.WriteLine("Case summary for " + c.FrameNumber + ": " + c.Problem);
-    }
 
     private RepairCase FindCase(string frameNumber)
     {
